@@ -1,0 +1,11 @@
+
+The next exam will have parts that can be done with Types and recursion, parts that will need Type classes and instances, and parts that will require Monads. If you can understand the three Monads we discussed for eval (exception handling, generating trace, and generating trace with line numbers) and can write them, you know Monads enough. Generating trace with line numbers is much like the parser Monad as it also stores functions inside the box. If you can understand and write the Parser Monad we discussed, you are already well-prepared for Exam 2.
+
+If you are catching up on Monads then first implement eval with Exception handling and other features without Monads. Then study the bind and box example to improve exception handling and try to reimplement eval variations with this. Then convert these examples to Monads. Try to answer the many yet unanswered questions on these posts. Finally study the parser discussed in next paragraph. 
+
+Here are the relevant posts again:
+1). https://www.facebook.com/groups/cs300lums/permalink/1102647776432382/
+2). https://www.facebook.com/groups/cs300lums/permalink/1105289359501557/
+3). http://adit.io/…/2013-04-17-functors,_applicatives,_and_mon…
+
+The finished parser code we were discussing in last class is available at http://junaid.name/teaching/lums-cs300-sp16/Parser.hs.html where I have added an operator <|> for running two parsers and combining all possible parses. This allowed running both grammar rules without the need to choose one. At the end, I selected the parse that consumed all tokens. I’ll not discuss it further in class.

@@ -1,0 +1,66 @@
+Mondas have four function that we need to
+implement:
+
+class Monad m where
+	return :: a -> m a
+	fail :: String -> m a
+
+	(>>=) :: (m a) (a -> m b) -> (m b)
+	(>>) :: (m a) -> (m b) -> (m b)
+
+Uses:
+1. Providing abstractions
+2. Make your code cleaner by (1)
+3. Provide a way of debugging and exception
+   handling.
+4. Can trace the execution of a program.
+
+
+Example:
+data Term = Const Int | Frac Term Term
+
+Simple solution:
+eval :: Term -> Int
+eval (Const x) = x
+eval (Frac f1 t2) = eval f1 / eval t2
+
+-- type of no way that something could 
+-- actually go wrong in it.
+
+Error Handling:
+eval1 :: Term -> Maybe Int
+eval1 (Const a) = Just a
+eval1 (Frac f1 t2) = case (eval1 f1) of
+	-- it could result in nothing
+	-- need to perform pattern matching on
+	-- result of eval1 f1
+	Nothing -> Nothing
+	(Just x) -> case (eval1 t2) of 
+		Nothing -> Nothing
+		(Just y) -> if y == 0 then Nothing
+					else Maybe (x/y)
+
+Comments:
+In last example, the moment we introduce 
+something which could go wrong, we have to
+do a lot of case-checking before actually
+being able to do something.
+
+It's an imperative programming approach 
+really shouldn't be used at all.
+
+Goals:
+We need to have the error handling part 
+seperate from the actual values that we 
+have.
+
+Solution:
+We need to implement the moand functions:
+bind and return for our data-type that cou-
+potentially represent failure.
+
+Error Handling with Abstraction:
+
+eval2 :: Term -> Maybe Int
+eval2 (Const a) = return a
+eval2 (Frac f1 f2)
