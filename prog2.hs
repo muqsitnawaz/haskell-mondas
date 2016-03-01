@@ -1,4 +1,5 @@
 import Control.Applicative
+import Control.Monad
 
 data Frac = Cons Double | Frac (Frac) (Frac) deriving (Show, Eq)
 
