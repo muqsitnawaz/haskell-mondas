@@ -1,1 +1,15 @@
-useful functions
+Useful functions:
+1. map:
+	used for transforming a list
+2. foldl/r
+	used for iterating over a list and returning something
+	takes in a function, a starting value and a list whose elems it takes one
+	by one.
+3. 
+
+Advanced Functions:
+1. liftM:
+	for applying a function to a value inside a box
+
+2. foldM
+	

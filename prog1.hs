@@ -15,11 +15,11 @@ instance Applicative List where
 instance Monad List where
 	return x = List x Nil
 	(List x Nil) >>= f = f x
+	Nil >>= _ = Nil
 	fail _ = Nil
 
-createList :: a -> List a
-createList x = List x Nil
-
+createList :: (Num a,Eq a) => [a] -> List a
+createList = foldl insertTail Nil
 
 insertHead :: (Num a, Eq a) => List a -> a -> List a
 insertHead Nil x = List x Nil
@@ -41,6 +41,13 @@ isEmpty :: (Num a, Eq a) => List a -> Bool
 isEmpty Nil = True
 isEmpty _ = False
 
-delete:: (Num a, Eq a) => List a -> a -> List a
+delete :: (Eq a) => List a -> a -> List a
 delete Nil _ = Nil
-delete (List d l) x = if d == x then Nil else (List d (delete l x))
+delete l@(List d Nil) d'
+	| d == d' = Nil
+	| otherwise = l
+delete (List d1 l1@(List d2 l2)) d' = if d1 == d' then l1 else List d1 (delete l1 d')
+
+truncate':: (Num a, Eq a) => List a -> a -> List a
+truncate' Nil _ = Nil
+truncate' (List d l) x = if d == x then Nil else (List d (truncate' l x))

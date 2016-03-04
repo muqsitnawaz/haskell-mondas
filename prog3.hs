@@ -1,5 +1,6 @@
 import Control.Applicative
 import Control.Monad
+import Data.List
 
 solveRPN :: String -> Float
 solveRPN exp = head $ foldl foo [] $ words exp
@@ -11,15 +12,15 @@ solveRPN exp = head $ foldl foo [] $ words exp
             foo xs "sum" = [sum xs]
             foo s n = read n:s
 
---read' :: (Read a) => String -> Maybe a
---read' s = 
+read' :: (Read a, Eq a) => String -> Maybe a
+read' s = case reads s of [(x,"")] -> Just x; _ -> Nothing
 
-readMaybe :: (Read a) => String -> Maybe a  
-readMaybe st = 
-    case reads st of [(x,"")] -> Just x  
-                            _ -> Nothing
+foo :: [Float] -> String -> Maybe [Float]
+foo (x:y:ys) "*" = return ((x*y):ys)
+foo s n = liftM (:s) (read' n) 
 
---solveRPN1 :: String -> Maybe Float
---solveRPN1 exp = head $ foldl (\x -> x) [] $ words exp
---    where   foo (x:y:ys) "*" = do x >>= (\x' -> (y >>= (\y' -> return (x'*y'))))):ys
---            foo s n = read n:s
+solveRPN1 :: String -> Maybe Float
+solveRPN1 exp = (foldM foo [] $ words exp) >>= (\x -> return $ head x)
+--solveRPN1 exp = do 
+--    res <- (foldM foo [] $ words exp)
+--    return $ head res
