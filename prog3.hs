@@ -15,12 +15,13 @@ solveRPN exp = head $ foldl foo [] $ words exp
 read' :: (Read a, Eq a) => String -> Maybe a
 read' s = case reads s of [(x,"")] -> Just x; _ -> Nothing
 
-foo :: [Float] -> String -> Maybe [Float]
-foo (x:y:ys) "*" = return ((x*y):ys)
-foo s n = liftM (:s) (read' n) 
+foo' :: [Float] -> String -> Maybe [Float]
+foo' (x:y:ys) "*" = return ((x*y):ys)
+foo' (x:y:ys) "+" = return ((x+y):ys)
+foo' (x:y:ys) "-" = return ((x-y):ys)
+foo' (x:y:ys) "^" = return ((y**x):ys)
+foo' (x:xs) "ln" = return (log x:xs)
+foo' s n = liftM (:s) (read' n) 
 
-solveRPN1 :: String -> Maybe Float
-solveRPN1 exp = (foldM foo [] $ words exp) >>= (\x -> return $ head x)
---solveRPN1 exp = do 
---    res <- (foldM foo [] $ words exp)
---    return $ head res
+solveRPN' :: String -> Maybe Float
+solveRPN' exp = (foldM foo' [] $ words exp) >>= (\x -> return $ head x)
