@@ -1,0 +1,14 @@
+1. Functors have some properties that they obey.
+2. For anything to be a functor, it should be able to be
+   mapped over.
+3. Laws:
+	a). id should give the same functor back
+	b). composing two fns and then mapping over a functor should be
+		same as mapping one fn. over a functor and then the other
+4. Having these laws allows us to reason about the behavior of 
+   things in our code and allows abstractions to take place.
+5. Applicatives: Beefed up versions of functors. Take a functor with a
+   fn. inside it, a functor and then return another functor.
+6. Can apply a binary fn. on a value to get a partially applied fn.
+   using applicative functors.
+7. 

@@ -5,9 +5,16 @@ Useful functions:
 	used for iterating over a list and returning something
 	takes in a function, a starting value and a list whose elems it takes one
 	by one.
-3. 
+3. filter
+    takes a function, a list and returns a list of values that satisfy
+    the condition
+4.  
 
 Advanced Functions:
+1. liftA2
+    applies a function between two applicative functors like:
+    liftA2 f a b = f <$> a <*> b : the applicative style of pogramming
+
 1. liftM:
 	for applying a function to a value inside a box
 
